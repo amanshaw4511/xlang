@@ -1,12 +1,14 @@
-package xlang.parser.value;
+package xlang.parser.expression.value;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.ToString;
-import xlang.parser.Expression;
+import xlang.parser.expression.Expression;
 
 @ToString
 @AllArgsConstructor
-public class Value<T extends Comparable<T>> implements Expression {
+@Getter
+public abstract class Value<T extends Comparable<T>> implements Expression {
     private final T value;
 
     @Override

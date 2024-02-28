@@ -1,14 +1,14 @@
-package xlang.parser;
+package xlang.parser.expression;
 
 import com.google.common.base.Function;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import xlang.parser.value.Value;
+import lombok.Data;
+import xlang.parser.expression.value.Value;
 
-@AllArgsConstructor(staticName = "of")
-@Getter
-public class VariableExpression implements Expression {
+@AllArgsConstructor
+@Data
+public class Variable implements Expression {
     private final String name;
     private final Function<String, Value<?>> getVariableValue;
 

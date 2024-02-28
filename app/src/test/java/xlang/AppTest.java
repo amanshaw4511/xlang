@@ -3,14 +3,28 @@
  */
 package xlang;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class AppTest {
     @Test
     void appHasAGreeting() {
         App classUnderTest = new App();
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    }
+
+    @Test
+    void test() {
+        var s = "  var i1 = 2\n" + //
+                "  var i2 = 5\n" + //
+                "  var s1 = \"hello\"\n" + //
+                "  var s2 = \"world\"\n" + //
+                "  var i3 = + i1 i2\n" + //
+                "  print i3\n" + //
+                "  var s3 = ++ s1 s2\n" + //
+                "  print s3";
+
+        new Xlang().execute(s);
     }
 }
