@@ -55,25 +55,25 @@ public class StatementParser {
         return tokens.get(pos - 1);
     }
 
-    private Expression parseExpression() {
+    private Expression parseNextExpression() {
         var token = next();
         return switch (token.type()) {
             case Boolean -> new BooleanValue(Boolean.valueOf(token.value()));
             case Integer -> new IntegerValue(Integer.valueOf(token.value()));
             case String -> new StringValue(token.value());
-            case Operator -> parseOpeartor();
+            case Operator -> parseNextOpeartor();
             case Variable -> new Variable(token.value(), store::get);
             case Keyword -> throw new UnsupportedOperationException("Unimplemented case: " + token.type());
             default -> throw new IllegalArgumentException("Unexpected value: " + token.type());
         };
     }
 
-    private Expression parseOpeartor() {
+    private Expression parseNextOpeartor() {
         var token = curr();
         return switch (token.value()) {
-            case "not" -> new NotOperator(parseExpression());
-            case "+" -> new AddOperator(parseExpression(), parseExpression());
-            case "++" -> new ConcateOperator(parseExpression(), parseExpression());
+            case "not" -> new NotOperator(parseNextExpression());
+            case "+" -> new AddOperator(parseNextExpression(), parseNextExpression());
+            case "++" -> new ConcateOperator(parseNextExpression(), parseNextExpression());
             default -> throw new IllegalArgumentException("invlid oeprator " + token.value());
         };
     }
@@ -82,33 +82,31 @@ public class StatementParser {
         var token = next();
         // variable declaration
         if (token.value().equals("var")) {
-            var varName = next();
+            var variableName = next();
             next(); // assignment operator
-            var varExpression = parseExpression();
+            var expression = parseNextExpression();
 
             return new AssignStatement(
-                    varName.value(),
-                    varExpression,
+                    variableName.value(),
+                    expression,
                     store::put);
 
         }
 
         // variable assignment
         if (token.type().equals(TokenType.Variable)) {
-            var varName = token;
+            var variableName = token;
             next(); // assignment operator
-            var varExpression = parseExpression();
+            var expression = parseNextExpression();
 
             return new AssignStatement(
-                    varName.value(),
-                    varExpression,
+                    variableName.value(),
+                    expression,
                     store::put);
         }
 
         if (token.value().equals("print")) {
-            var expression = parseExpression();
-            return new PrintStatement(expression);
-
+            return new PrintStatement(parseNextExpression());
         }
         throw new RuntimeException("invalid token " + token);
     }

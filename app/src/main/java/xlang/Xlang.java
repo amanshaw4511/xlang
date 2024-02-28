@@ -24,10 +24,13 @@ public class Xlang {
     public void execute(String sourceCode) {
         List<Token> tokens = Tokenizer.tokenize(sourceCode);
         log.debug("parsed tokens : ", tokens);
+
         Map<String, Value<?>> store = new HashMap<>();
+
         StatementParser statementParser = new StatementParser(tokens, store);
+
         var statement = statementParser.parse();
-        System.out.println(statement);
+
         statement.execute();
     }
 
@@ -39,7 +42,8 @@ public class Xlang {
                 "  var i3 = + i1 i2\n" + //
                 "  print i3\n" + //
                 "  var s3 = ++ s1 s2\n" + //
-                "  print s3";
+                "  print s3\n" +
+                "  print ++ s3 \" one\"";
 
         new Xlang().execute(s);
     }
