@@ -108,7 +108,8 @@ public class StatementParser {
         if (token.value().equals("print")) {
             return new PrintStatement(parseNextExpression());
         }
-        throw new RuntimeException("invalid token " + token);
+
+        throw new SyntaxError("unexpected token " + token);
     }
 
     public Statement parse() {
