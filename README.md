@@ -1,3 +1,4 @@
+[![Java CI with Gradle](https://github.com/amanshaw4511/xlang/actions/workflows/gradle.yml/badge.svg)](https://github.com/amanshaw4511/xlang/actions/workflows/gradle.yml)
 # xlang
 X programming language
 
