@@ -24,6 +24,7 @@ dependencies {
 
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
+    testImplementation("org.assertj:assertj-core:3.25.3")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -31,6 +32,7 @@ dependencies {
     implementation(libs.guava)
     implementation("ch.qos.logback:logback-classic:1.5.0")
     implementation("org.slf4j:slf4j-api:2.0.12")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
