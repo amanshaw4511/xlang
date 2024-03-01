@@ -9,7 +9,7 @@ public class IfElse implements Statement {
     private final Statement ifBody;
     private final Statement elseBody;
 
-    public IfElse(Expression condition, Statement ifBody, Statement elseBody) {
+    private IfElse(Expression condition, Statement ifBody, Statement elseBody) {
         this.condition = condition;
         this.ifBody = ifBody;
         this.elseBody = elseBody;
