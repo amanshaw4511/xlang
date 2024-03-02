@@ -4,9 +4,9 @@ import xlang.parser.expression.Expression;
 import xlang.parser.expression.value.StringValue;
 import xlang.parser.expression.value.Value;
 
-public class ConcateOperator extends BinaryOperator {
+public class ConcatOperator extends BinaryOperator {
 
-    public ConcateOperator(Expression leftArg, Expression rightArg) {
+    public ConcatOperator(Expression leftArg, Expression rightArg) {
         super(leftArg, rightArg);
     }
 

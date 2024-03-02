@@ -3,12 +3,15 @@
  */
 package xlang;
 
+import java.nio.file.Paths;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        if (args.length != 1) {
+            return;
+        }
+        var path = args[0];
+        new Xlang().execute(Paths.get(path));
     }
 }

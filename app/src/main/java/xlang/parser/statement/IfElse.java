@@ -1,9 +1,12 @@
 package xlang.parser.statement;
 
+import lombok.Data;
 import lombok.NonNull;
+import xlang.memory.MemoryContext;
 import xlang.parser.expression.Expression;
 import xlang.parser.expression.value.BooleanValue;
 
+@Data
 public class IfElse implements Statement {
     private final Expression condition;
     private final Statement ifBody;
@@ -29,10 +32,13 @@ public class IfElse implements Statement {
         var isTrue = (BooleanValue) condition.evaluate();
 
         if (isTrue.getValue()) {
+            MemoryContext.newScope();
             ifBody.execute();
-            return;
+            MemoryContext.endScope();
         } else {
+            MemoryContext.newScope();
             elseBody.execute();
+            MemoryContext.endScope();
         }
     }
 

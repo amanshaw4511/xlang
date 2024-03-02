@@ -8,11 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 class AppTest {
-    @Test
-    void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-    }
 
     @Test
     void test() {
@@ -25,6 +20,6 @@ class AppTest {
                 "  var s3 = ++ s1 s2\n" + //
                 "  print s3";
 
-        new Xlang().execute(s);
+        new Xlang().execute(s, System.out);
     }
 }

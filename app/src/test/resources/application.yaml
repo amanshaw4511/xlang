@@ -1,0 +1,8 @@
+logging:
+  level:
+    ROOT: info
+
+org:
+  slf4j:
+    simpleLogger:
+      defaultLogLeve: info
