@@ -11,5 +11,7 @@ public enum TokenType {
     String,
     Variable,
     Operator,
-    Keyword;
+    Keyword,
+    BlockStart,
+    BlockEnd;
 }

@@ -17,6 +17,7 @@ import xlang.parser.expression.value.StringValue;
 import xlang.parser.expression.value.Value;
 import xlang.parser.statement.AssignStatement;
 import xlang.parser.statement.CompositeStatement;
+import xlang.parser.statement.IfElse;
 import xlang.parser.statement.PrintStatement;
 import xlang.parser.statement.Statement;
 
@@ -43,9 +44,9 @@ public class StatementParser {
         return pos != len;
     }
 
-    // private Token peek() {
-    // return tokens.get(pos + 1);
-    // }
+    private Token peek() {
+        return tokens.get(pos);
+    }
 
     // private Token prev() {
     // return tokens.get(pos - 2);
@@ -108,7 +109,44 @@ public class StatementParser {
         if (token.value().equals("print")) {
             return new PrintStatement(parseNextExpression());
         }
-        throw new RuntimeException("invalid token " + token);
+
+        if (token.value().equals("if")) {
+            return parseIfElseStatement();
+        }
+        throw new SyntaxError("unexpected token " + token);
+    }
+
+    public Statement parseIfElseStatement() {
+        var condition = parseNextExpression();
+        expectNextToken("{");
+        var ifBody = new CompositeStatement();
+        while (!peek().value().equals("}")) {
+            ifBody.addStatement(parseNextStatement());
+        }
+        expectNextToken("}");
+
+        if (!hasNext() || !peek().value().equals("else")) {
+            return IfElse.of(condition, ifBody);
+        }
+
+        expectNextToken("else");
+        expectNextToken("{");
+
+        var elseBody = new CompositeStatement();
+        while (!peek().value().equals("}")) {
+            elseBody.addStatement(parseNextStatement());
+        }
+        expectNextToken("}");
+        return IfElse.of(condition, ifBody, elseBody);
+    }
+
+    public void expectNextToken(String tokenValue) {
+        var token = next();
+        if (!token.value().equals(tokenValue)) {
+            throw new SyntaxError("expected token : " + tokenValue);
+
+        }
+
     }
 
     public Statement parse() {

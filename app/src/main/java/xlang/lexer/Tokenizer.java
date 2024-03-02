@@ -3,6 +3,8 @@ package xlang.lexer;
 import static java.lang.Character.isAlphabetic;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isWhitespace;
+import static xlang.lexer.TokenType.BlockEnd;
+import static xlang.lexer.TokenType.BlockStart;
 import static xlang.lexer.TokenType.Boolean;
 import static xlang.lexer.TokenType.Integer;
 import static xlang.lexer.TokenType.Keyword;
@@ -108,8 +110,8 @@ public class Tokenizer {
             if (arr[i] == '+') {
                 i++;
                 if (i < len && arr[i] == '+') {
-                    i++;
                     addToken(tokens, Operator, "++");
+                    i++;
                     continue;
                 }
                 addToken(tokens, Operator, "+");
@@ -119,16 +121,28 @@ public class Tokenizer {
             if (arr[i] == '=') {
                 i++;
                 if (i < len && arr[i] == '=') {
-                    i++;
                     addToken(tokens, Operator, "==");
+                    i++;
                     continue;
                 }
                 addToken(tokens, Operator, "=");
                 continue;
             }
             if (List.of('.', '+', '-', '*', '/', '<', '>').contains(arr[i])) {
-                i++;
                 addToken(tokens, Operator, Character.toString(arr[i]));
+                i++;
+                continue;
+            }
+
+            if (arr[i] == '{') {
+                addToken(tokens, BlockStart, Character.toString(arr[i]));
+                i++;
+                continue;
+            }
+            if (arr[i] == '}') {
+                addToken(tokens, BlockEnd, Character.toString(arr[i]));
+                i++;
+                continue;
             }
 
         }
