@@ -13,5 +13,5 @@ public enum TokenType {
     Operator,
     Keyword,
     BlockStart,
-    BlockEnd;
+    BlockEnd
 }

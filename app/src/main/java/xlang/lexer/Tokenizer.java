@@ -1,21 +1,13 @@
 package xlang.lexer;
 
-import static java.lang.Character.isAlphabetic;
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isWhitespace;
-import static xlang.lexer.TokenType.BlockEnd;
-import static xlang.lexer.TokenType.BlockStart;
-import static xlang.lexer.TokenType.Boolean;
-import static xlang.lexer.TokenType.Integer;
-import static xlang.lexer.TokenType.Keyword;
-import static xlang.lexer.TokenType.Operator;
-import static xlang.lexer.TokenType.String;
-import static xlang.lexer.TokenType.Variable;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Character.*;
+import static xlang.lexer.TokenType.*;
+
 public class Tokenizer {
+    private Tokenizer() {}
     private static final List<String> booleans = List.of("true", "false");
     private static final char stringQuote = '"';
 
@@ -57,8 +49,8 @@ public class Tokenizer {
             }
 
             if (isAlphabetic(arr[i])) {
-                // it could be either keywowrd, named-operator, boolean-literal or variable
-                StringBuffer sb = new StringBuffer();
+                // it could be either keyword, named-operator, boolean-literal or variable
+                StringBuilder sb = new StringBuilder();
                 do {
                     sb.append(arr[i]);
                     i++;
@@ -85,7 +77,7 @@ public class Tokenizer {
             }
 
             if (isDigit(arr[i])) {
-                StringBuffer sb = new StringBuffer();
+                StringBuilder sb = new StringBuilder();
                 do {
                     sb.append(arr[i]);
                     i++;
@@ -96,7 +88,7 @@ public class Tokenizer {
             }
 
             if (arr[i] == stringQuote) {
-                StringBuffer sb = new StringBuffer();
+                StringBuilder sb = new StringBuilder();
                 i++;
                 while (i < len && arr[i] != stringQuote) { // todo handle scape char
                     sb.append(arr[i]);
@@ -149,20 +141,4 @@ public class Tokenizer {
         return tokens;
 
     }
-
-    public static void main(String[] args) {
-        var s = "  var i1 = 2\n" + //
-                "  var i2 = 5\n" + //
-                "  var s1 = \"hello\"\n" + //
-                "  var s2 = \"world\"\n" + //
-                "  var i3 = i1 + i2\n" + //
-                "  print i3\n" + //
-                "  var s3 = s1 ++ s2\n" + //
-                "  print s3";
-
-        for (var token : Tokenizer.tokenize(s)) {
-            System.out.println(token);
-        }
-    }
-
 }

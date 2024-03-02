@@ -1,14 +1,15 @@
 package xlang.parser.statement;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-@Getter
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
+@Data
 public class CompositeStatement implements Statement {
     private final List<Statement> statements = new ArrayList<>();
 
@@ -18,6 +19,6 @@ public class CompositeStatement implements Statement {
 
     @Override
     public void execute() {
-        statements.forEach(it -> it.execute());
+        statements.forEach(Statement::execute);
     }
 }
